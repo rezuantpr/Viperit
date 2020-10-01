@@ -18,6 +18,9 @@ public protocol RouterProtocol: ViperitComponent {
     func show(from containerView: UIViewController, insideView targetView: UIView, setupData: Any?)
     func present(from: UIViewController, embedInNavController: Bool, presentationStyle: UIModalPresentationStyle, transitionStyle: UIModalTransitionStyle, setupData: Any?, completion: (() -> Void)?)
     func dismiss(animated flag: Bool, completion: (() -> Void)?)
+    
+    func pushViewController(from: UIViewController, animated: Bool, setupData: Any?)
+    func popViewContoller(animated: Bool)
 }
 
 public extension RouterProtocol {
@@ -67,6 +70,16 @@ open class Router: RouterProtocol {
     
     public func dismiss(animated flag: Bool = true, completion: (() -> Void)? = nil) {
         viewController.dismiss(animated: flag, completion: completion)
+    }
+    
+    
+    public func pushViewController(from: UIViewController, animated: Bool, setupData: Any?) {
+        process(setupData: setupData)
+        from.navigationController?.pushViewController(viewController, animated: animated)
+    }
+    
+    public func popViewContoller(animated: Bool) {
+        viewController.navigationController?.popViewController(animated: animated)
     }
     
     required public init() { }
